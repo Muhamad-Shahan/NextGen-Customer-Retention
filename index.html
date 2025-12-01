@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next-Gen Customer Retention | Research Showcase</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e293b;
+            --accent: #0ea5e9;
+            --light: #f8fafc;
+        }
+        
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--secondary); background: var(--light); }
+        
+        /* Hero Section */
+        header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .authors { font-size: 1.1rem; opacity: 0.8; margin-bottom: 2rem; }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.3s;
+            margin: 5px;
+        }
+        .btn:hover { background: var(--accent); transform: translateY(-2px); }
+        .btn-outline { background: transparent; border: 2px solid white; }
+
+        /* Sections */
+        section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+        h2 { color: var(--primary); border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        
+        /* Methodology Image */
+        .methodology-container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+        .methodology-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Interactive Grid */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+        
+        /* Stats Cards */
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Chart Container */
+        .chart-container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+
+        /* LAAI Interactive Tool */
+        .calculator { background: #eff6ff; padding: 2rem; border-radius: 12px; border: 1px solid #bfdbfe; }
+        .calc-input { padding: 10px; border-radius: 6px; border: 1px solid #ccc; width: 100px; }
+        
+        footer { background: var(--secondary); color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Next-Gen Customer Retention</h1>
+        <p>A Stacked Ensemble Model for Churn Prediction with 98.1% Accuracy</p>
+        <div class="authors">
+            By Ibad et al. | Published in Spectrum of Engineering Sciences (2025)
+        </div>
+        <div>
+            <a href="https://github.com/YOUR_USERNAME/NextGen-Customer-Retention" class="btn"><i class="fab fa-github"></i> View Code</a>
+            <a href="#results" class="btn btn-outline">See Results</a>
+        </div>
+    </header>
+
+    <section>
+        <h2>Abstract</h2>
+        <p>Customer churn is a major problem in the telecom industry. Traditional models often fail due to class imbalance and inability to capture subtle patterns. We propose an <strong>Ensemble Stacking Model</strong> combining Random Forest, KNN, and Naïve Bayes, fed into a Logistic Regression meta-learner. Our model achieves state-of-the-art performance while introducing the <strong>Latency Aware Accuracy Index (LAAI)</strong> for real-world efficiency.</p>
+    </section>
+
+    <section id="methodology">
+        <h2>Methodology Pipeline</h2>
+        <p>The proposed workflow includes Data Preprocessing, SMOTEENN Balancing, Base Learner Training, and Stacked Ensemble Prediction.</p>
+        
+        <div class="methodology-container">
+            <img src="assets/figure1_methodology.png" alt="Methodology Diagram showing Data Preprocessing, Base Learners (SVM, KNN, NB, RF), and Stacking Classifier" class="methodology-img">
+            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Figure 1: The Indented Methodology Pipeline [Source: Ibad et al., 2025]</p>
+        </div>
+    </section>
+
+    <section id="results">
+        <h2>Performance Comparison</h2>
+        <div class="grid-2">
+            <div>
+                <p>We compared our Stacking Classifier against industry standard individual models. Our approach achieved the highest accuracy and a superior balance of precision and recall.</p>
+                <div class="stat-card" style="margin-bottom: 1rem;">
+                    <div class="stat-number">98.1%</div>
+                    <div class="stat-label">Stacking Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0.90</div>
+                    <div class="stat-label">LAAI Score</div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Novel Metric: LAAI</h2>
+        <p>We introduced the <strong>Latency Aware Accuracy Index</strong> to penalize models that are accurate but too slow for real-time deployment.</p>
+        
+        <div class="calculator">
+            <h3>Try the Formula:</h3>
+            <p><code>LAAI = Accuracy / (1 + Latency)</code></p>
+            <p>
+                If a model has <input type="number" value="0.98" class="calc-input" disabled> Accuracy and 
+                <input type="number" value="0.11" class="calc-input" disabled> seconds Latency...
+            </p>
+            <p><strong>The LAAI Score is: 0.90</strong> (High Efficiency)</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Next-Gen Customer Retention Research. <br> Ibad, Shah, Samin, & Johar.</p>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('comparisonChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['SVM', 'Naïve Bayes', 'Logistic Reg', 'Random Forest', 'KNN', 'Ensemble Stacking'],
+                datasets: [{
+                    label: 'Accuracy (%)',
+                    data: [79.67, 88.34, 90.48, 91.78, 92.72, 98.10],
+                    backgroundColor: [
+                        '#cbd5e1', '#cbd5e1', '#cbd5e1', '#94a3b8', '#64748b', '#2563eb'
+                    ],
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.raw + '% Accuracy';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        min: 70,
+                        max: 100
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
