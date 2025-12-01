@@ -4,157 +4,442 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Next-Gen Customer Retention | Research Showcase</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <style>
+        /* --- CSS VARIABLES & RESET --- */
         :root {
-            --primary: #2563eb;
-            --secondary: #1e293b;
-            --accent: #0ea5e9;
-            --light: #f8fafc;
+            --primary: #2563eb;       /* Royal Blue */
+            --primary-dark: #1e40af;
+            --secondary: #0f172a;     /* Slate Dark */
+            --accent: #3b82f6;        /* Bright Blue */
+            --bg-light: #f8fafc;
+            --surface: #ffffff;
+            --text-gray: #64748b;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            color: var(--secondary); 
+            background: var(--bg-light); 
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { margin-top: 0; }
+        
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
         
-        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--secondary); background: var(--light); }
-        
-        /* Hero Section */
-        header {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .authors { font-size: 1.1rem; opacity: 0.8; margin-bottom: 2rem; }
         .btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             padding: 12px 24px;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
             border-radius: 8px;
             font-weight: 600;
-            transition: 0.3s;
-            margin: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
         }
-        .btn:hover { background: var(--accent); transform: translateY(-2px); }
-        .btn-outline { background: transparent; border: 2px solid white; }
-
-        /* Sections */
-        section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
-        h2 { color: var(--primary); border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
         
-        /* Methodology Image */
-        .methodology-container {
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+        }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        .btn-outline {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(5px);
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+        .btn-secondary-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+        .btn-secondary-outline:hover { background: var(--primary); color: white; }
+
+        /* --- HERO SECTION --- */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Decorative circle behind header */
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(37,99,235,0.2) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .authors-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cta-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        section { padding: 5rem 0; }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Underline effect */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- CARDS & BOXES --- */
+        .card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        /* --- METHODOLOGY --- */
+        .methodology-box {
             text-align: center;
             background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
         }
+        
         .methodology-img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .methodology-img:hover { transform: scale(1.02); }
+
+        /* --- RESULTS GRID --- */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            align-items: center;
         }
 
-        /* Interactive Grid */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
-        
-        /* Stats Cards */
-        .stat-card {
-            background: white;
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            background: #f0f9ff;
             padding: 1.5rem;
             border-radius: 12px;
             text-align: center;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
         }
-        .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--primary); }
-        .stat-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Chart Container */
-        .chart-container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-
-        /* LAAI Interactive Tool */
-        .calculator { background: #eff6ff; padding: 2rem; border-radius: 12px; border: 1px solid #bfdbfe; }
-        .calc-input { padding: 10px; border-radius: 6px; border: 1px solid #ccc; width: 100px; }
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+        }
         
-        footer { background: var(--secondary); color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+        .stat-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-gray);
+            font-weight: 600;
+        }
 
-        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+        /* --- LAAI CALCULATOR --- */
+        .laai-section {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+        }
+
+        .laai-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .calculator-box {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; opacity: 0.9; }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+
+        .result-display {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+        }
+
+        .result-value { font-size: 2.5rem; font-weight: 700; color: #4ade80; }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--secondary);
+            color: #94a3b8;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            font-size: 0.9rem;
+        }
+
+        /* --- ANIMATION --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .grid-2, .laai-container { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 2rem; }
+            .section-title { font-size: 1.75rem; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Next-Gen Customer Retention</h1>
-        <p>A Stacked Ensemble Model for Churn Prediction with 98.1% Accuracy</p>
-        <div class="authors">
-            By Ibad et al. | Published in Spectrum of Engineering Sciences (2025)
-        </div>
-        <div>
-            <a href="https://github.com/YOUR_USERNAME/NextGen-Customer-Retention" class="btn"><i class="fab fa-github"></i> View Code</a>
-            <a href="#results" class="btn btn-outline">See Results</a>
+        <div class="container hero-content">
+            <div class="authors-badge">
+                Published in Spectrum of Engineering Sciences (2025)
+            </div>
+            <h1>Next-Gen Customer Retention</h1>
+            <p class="hero-subtitle">
+                A Stacked Ensemble Model for Churn Prediction achieving 98.1% accuracy using the novel Latency Aware Accuracy Index (LAAI).
+            </p>
+            
+            <div class="cta-group">
+                <a href="https://github.com/YOUR_USERNAME/NextGen-Customer-Retention" class="btn btn-outline">
+                    <i class="fab fa-github"></i> View Repository
+                </a>
+                
+                <a href="https://thesesjournal.com/index.php/1/article/view/503" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-file-pdf"></i> Read Research Paper
+                </a>
+                
+                <a href="https://www.kaggle.com/datasets/palashfendarkar/wa-fnusec-telcocustomerchurn" target="_blank" class="btn btn-outline">
+                    <i class="fas fa-database"></i> Get Dataset
+                </a>
+            </div>
         </div>
     </header>
 
     <section>
-        <h2>Abstract</h2>
-        <p>Customer churn is a major problem in the telecom industry. Traditional models often fail due to class imbalance and inability to capture subtle patterns. We propose an <strong>Ensemble Stacking Model</strong> combining Random Forest, KNN, and Naïve Bayes, fed into a Logistic Regression meta-learner. Our model achieves state-of-the-art performance while introducing the <strong>Latency Aware Accuracy Index (LAAI)</strong> for real-world efficiency.</p>
-    </section>
-
-    <section id="methodology">
-        <h2>Methodology Pipeline</h2>
-        <p>The proposed workflow includes Data Preprocessing, SMOTEENN Balancing, Base Learner Training, and Stacked Ensemble Prediction.</p>
-        
-        <div class="methodology-container">
-            <img src="assets/figure1_methodology.png" alt="Methodology Diagram showing Data Preprocessing, Base Learners (SVM, KNN, NB, RF), and Stacking Classifier" class="methodology-img">
-            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Figure 1: The Indented Methodology Pipeline [Source: Ibad et al., 2025]</p>
+        <div class="container">
+            <h2 class="section-title">Abstract</h2>
+            <div class="card fade-in">
+                <p style="font-size: 1.1rem; color: #334155;">
+                    Customer churn is a critical challenge in the telecommunications industry. Traditional machine learning models often struggle with high-dimensional datasets and class imbalance. This research introduces a <strong>Stacked Ensemble Model</strong> that integrates <strong>Random Forest, KNN, and Naïve Bayes</strong> as base learners, with <strong>Logistic Regression</strong> as a meta-learner. By utilizing <strong>SMOTEENN</strong> for data balancing and minimizing the <strong>Latency Aware Accuracy Index (LAAI)</strong>, the proposed model achieves superior performance suitable for real-time deployment.
+                </p>
+            </div>
         </div>
     </section>
 
-    <section id="results">
-        <h2>Performance Comparison</h2>
-        <div class="grid-2">
-            <div>
-                <p>We compared our Stacking Classifier against industry standard individual models. Our approach achieved the highest accuracy and a superior balance of precision and recall.</p>
-                <div class="stat-card" style="margin-bottom: 1rem;">
-                    <div class="stat-number">98.1%</div>
-                    <div class="stat-label">Stacking Accuracy</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">0.90</div>
-                    <div class="stat-label">LAAI Score</div>
-                </div>
-            </div>
-            <div class="chart-container">
-                <canvas id="comparisonChart"></canvas>
+    <section style="background: white;">
+        <div class="container">
+            <h2 class="section-title">Methodology Pipeline</h2>
+            <div class="methodology-box fade-in">
+                <p style="margin-bottom: 20px; color: var(--text-gray);">
+                    The complete workflow includes Data Preprocessing, SMOTEENN Balancing, Base Learner Training, and Stacked Ensemble Prediction.
+                </p>
+                <img src="assets/figure1_methodology.png" 
+                     alt="Methodology Diagram showing Data Preprocessing, Base Learners (SVM, KNN, NB, RF), and Stacking Classifier" 
+                     class="methodology-img">
+                <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 15px;">
+                    Figure 1: The Indented Methodology Pipeline [Source: Ibad et al., 2025]
+                </p>
             </div>
         </div>
     </section>
 
     <section>
-        <h2>Novel Metric: LAAI</h2>
-        <p>We introduced the <strong>Latency Aware Accuracy Index</strong> to penalize models that are accurate but too slow for real-time deployment.</p>
-        
-        <div class="calculator">
-            <h3>Try the Formula:</h3>
-            <p><code>LAAI = Accuracy / (1 + Latency)</code></p>
-            <p>
-                If a model has <input type="number" value="0.98" class="calc-input" disabled> Accuracy and 
-                <input type="number" value="0.11" class="calc-input" disabled> seconds Latency...
-            </p>
-            <p><strong>The LAAI Score is: 0.90</strong> (High Efficiency)</p>
+        <div class="container">
+            <h2 class="section-title">Comparison Results</h2>
+            <div class="grid-2 fade-in">
+                
+                <div>
+                    <h3>Outperforming Individual Models</h3>
+                    <p style="color: var(--text-gray);">
+                        We benchmarked our Stacking Classifier against industry-standard models. The ensemble approach not only achieved the highest accuracy but also maintained a high LAAI score, proving its efficiency.
+                    </p>
+                    
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <span class="stat-number">98.1%</span>
+                            <span class="stat-label">Stacking Accuracy</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">0.90</span>
+                            <span class="stat-label">LAAI Score</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">98.1%</span>
+                            <span class="stat-label">Precision</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">0.11s</span>
+                            <span class="stat-label">Prediction Latency</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card chart-container">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="laai-section fade-in">
+                <div class="laai-container">
+                    <div>
+                        <h2 style="color: white; border: none; text-align: left;">Novel Metric: LAAI</h2>
+                        <p style="opacity: 0.9; font-size: 1.1rem;">
+                            High accuracy is useless if the model is too slow for real-time systems. We introduced the <strong>Latency Aware Accuracy Index</strong> to penalize slow models.
+                        </p>
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-top: 20px; font-family: monospace;">
+                            LAAI = Accuracy / (1 + Latency)
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-box">
+                        <h3 style="color: white; margin-bottom: 20px;">Try the Calculator</h3>
+                        
+                        <div class="input-group">
+                            <label>Model Accuracy (0.0 to 1.0)</label>
+                            <input type="number" id="accInput" value="0.98" step="0.01" max="1.0">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Latency (Seconds)</label>
+                            <input type="number" id="latInput" value="0.11" step="0.01">
+                        </div>
+
+                        <div class="result-display">
+                            <div style="font-size: 0.9rem; text-transform: uppercase;">Calculated LAAI Score</div>
+                            <div class="result-value" id="laaiResult">0.90</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Next-Gen Customer Retention Research. <br> Ibad, Shah, Samin, & Johar.</p>
+        <div class="container">
+            <p>&copy; 2025 Next-Gen Customer Retention Research.</p>
+            <p>Authors: Muhammad Shahan Ibad, Syed Noor Hussain Shah, Omar Bin Samin, Sumaira Johar.</p>
+            <div style="margin-top: 10px;">
+                <a href="#" style="color: #64748b; text-decoration: none; margin: 0 10px;">GitHub</a>
+                <a href="#" style="color: #64748b; text-decoration: none; margin: 0 10px;">Journal</a>
+            </div>
+        </div>
     </footer>
 
     <script>
+        // 1. CHART JS CONFIGURATION
         const ctx = document.getElementById('comparisonChart').getContext('2d');
         const myChart = new Chart(ctx, {
             type: 'bar',
@@ -166,30 +451,70 @@
                     backgroundColor: [
                         '#cbd5e1', '#cbd5e1', '#cbd5e1', '#94a3b8', '#64748b', '#2563eb'
                     ],
-                    borderRadius: 5
+                    borderRadius: 6,
+                    barThickness: 30,
                 }]
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: { display: false },
                     tooltip: {
+                        backgroundColor: '#1e293b',
+                        padding: 10,
                         callbacks: {
-                            label: function(context) {
-                                return context.raw + '% Accuracy';
-                            }
+                            label: function(context) { return context.raw + '% Accuracy'; }
                         }
                     }
                 },
                 scales: {
                     y: {
-                        beginAtZero: true,
+                        beginAtZero: false,
                         min: 70,
-                        max: 100
+                        max: 100,
+                        grid: { color: '#f1f5f9' }
+                    },
+                    x: {
+                        grid: { display: false }
                     }
                 }
             }
         });
+
+        // 2. LAAI CALCULATOR LOGIC
+        const accInput = document.getElementById('accInput');
+        const latInput = document.getElementById('latInput');
+        const resultDisplay = document.getElementById('laaiResult');
+
+        function calculateLAAI() {
+            const accuracy = parseFloat(accInput.value);
+            const latency = parseFloat(latInput.value);
+
+            if (!isNaN(accuracy) && !isNaN(latency)) {
+                // Formula: Accuracy / (1 + Latency)
+                const laai = accuracy / (1 + latency);
+                resultDisplay.innerText = laai.toFixed(2);
+            } else {
+                resultDisplay.innerText = "--";
+            }
+        }
+
+        // Add event listeners to inputs
+        accInput.addEventListener('input', calculateLAAI);
+        latInput.addEventListener('input', calculateLAAI);
+
+        // 3. FADE IN ANIMATION ON SCROLL
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
